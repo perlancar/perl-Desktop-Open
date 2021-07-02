@@ -41,8 +41,8 @@ sub open_desktop {
 
 =head1 SYNOPSIS
 
- use Desktop::Open qw(desktop_open);
- my $ok = desktop_open($path_or_url);
+ use Desktop::Open qw(open_desktop);
+ my $ok = open_desktop($path_or_url);
  # !defined($ok);       no recognized command found
  # $ok == 0;            command found and executed
  # $ok != 0;            command found, error while executing
@@ -63,7 +63,7 @@ TODO: On OSX, use "openit". Any taker?
 
 =head1 FUNCTIONS
 
-=head2 desktop_open
+=head2 open_desktop
 
 
 =head1 SEE ALSO
