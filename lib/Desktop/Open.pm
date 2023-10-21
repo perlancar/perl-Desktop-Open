@@ -18,6 +18,12 @@ sub open_desktop {
 
     my $res;
   OPEN: {
+        if (defined $ENV{PERL_DESKTOP_OPEN_PROGRAM}) {
+            system $ENV{PERL_DESKTOP_OPEN_PROGRAM}, $path_or_url;
+            $res = $?;
+            last;
+        }
+
         goto BROWSER if ($ENV{PERL_DESKTOP_OPEN_USE_BROWSER} || 0) == 1;
 
         if ($^O eq 'MSWin32') {
@@ -80,6 +86,12 @@ TODO: On OSX, use "openit". Any taker?
 
 
 =head1 ENVIRONMENT
+
+=head2 PERL_DESKTOP_OPEN_PROGRAM
+
+String. Override which program to use for opening the progrm instead of
+B<xdg-open>. Note that the program is not checked for existence, nor the result
+is checked for success. No other program will be tried.
 
 =head2 PERL_DESKTOP_OPEN_USE_BROWSER
 
