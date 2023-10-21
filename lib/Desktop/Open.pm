@@ -1,16 +1,16 @@
 package Desktop::Open;
 
+use strict;
+use warnings;
+use Log::ger;
+
+use Exporter qw(import);
+
 # AUTHORITY
 # DATE
 # DIST
 # VERSION
 
-use strict;
-use warnings;
-use Log::ger;
-
-require Exporter;
-our @ISA       = qw(Exporter);
 our @EXPORT_OK = qw(open_desktop);
 
 sub open_desktop {
@@ -18,6 +18,8 @@ sub open_desktop {
 
     my $res;
   OPEN: {
+        last OPEN if ($ENV{PERL_DESKTOP_OPEN_USE_BROWSER} || 0) == 1;
+
         if ($^O eq 'MSWin32') {
             system "start", $path_or_url;
             $res = $?;
@@ -74,6 +76,14 @@ TODO: On OSX, use "openit". Any taker?
 =head1 FUNCTIONS
 
 =head2 open_desktop
+
+
+=head1 ENVIRONMENT
+
+=head2 PERL_DESKTOP_OPEN_USE_BROWSER
+
+Integer. If set to 1, then will just use L<Browser::Open> directly instead of
+B<xdg-open> program.
 
 
 =head1 SEE ALSO
