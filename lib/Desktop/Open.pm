@@ -18,7 +18,7 @@ sub open_desktop {
 
     my $res;
   OPEN: {
-        last OPEN if ($ENV{PERL_DESKTOP_OPEN_USE_BROWSER} || 0) == 1;
+        goto BROWSER if ($ENV{PERL_DESKTOP_OPEN_USE_BROWSER} || 0) == 1;
 
         if ($^O eq 'MSWin32') {
             system "start", $path_or_url;
@@ -41,6 +41,7 @@ sub open_desktop {
             }
         }
 
+      BROWSER:
         require Browser::Open;
         $res = Browser::Open::open_browser($path_or_url);
     }
